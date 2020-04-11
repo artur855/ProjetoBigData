@@ -112,7 +112,7 @@ def print_metrics(model, data_test, label_test, train_time):
   print("F1: %.2f") % (f1)
   print("Precision: %.2f") % (precision)
   print("Train time %.2f seconds") % (train_time)
-  print("Predict time %.2f seconds") % (predict_time)
+  print("Predict time %.2f secon    ds") % (predict_time)
 
 def main():
 
