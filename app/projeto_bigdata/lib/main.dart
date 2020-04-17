@@ -23,7 +23,6 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  
   MyHomePage({Key key, this.title}) : super(key: key);
 
   final String title;
@@ -33,7 +32,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   Future<File> _tirarFoto() async {
     return await ImagePicker.pickImage(
       source: ImageSource.camera,
@@ -43,29 +41,22 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _enviarFoto() async {
-    
     try {
-      
       ModalUtil.exibirModalCarregando(context);
 
       var foto = await _tirarFoto();
-      var request = http.MultipartRequest('POST', Uri.parse('http://192.168.0.103:8080/manipulate/teste'));
-        request.files.add(
-          http.MultipartFile(
-            'file',
-            foto.readAsBytes().asStream(),
-            foto.lengthSync(),
-            filename: 'foto.png'
-          )
-        );
-      
+      var request = http.MultipartRequest(
+          'POST', Uri.parse('http://53d32f4c.ngrok.io/which_draw'));
+      request.files.add(http.MultipartFile(
+          'file', foto.readAsBytes().asStream(), foto.lengthSync(),
+          filename: 'foto.png'));
+
       var response = await request.send();
       var responseBody = await response.stream.bytesToString();
 
       Navigator.of(context).pop();
       ModalUtil.exibirModalSucesso(context, responseBody);
-
-    }on Exception catch(_) {
+    } on Exception catch (_) {
       Navigator.of(context).pop();
       ModalUtil.exibirModalAtencao(context, 'Erro inesperado!');
     }
@@ -80,8 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-          ],
+          children: <Widget>[],
         ),
       ),
       floatingActionButton: FloatingActionButton(
